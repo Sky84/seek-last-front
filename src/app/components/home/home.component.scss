@@ -1,0 +1,58 @@
+.home {
+    height: 100%;
+    background: #2c345b;
+    display: flex;
+    flex-direction: column;
+
+    &__player-steamid {
+        margin-left: 1rem;
+        color: #dddddd;
+
+        &__formfield {
+            width: 100%;
+            &__label,
+            &__input {
+                color: #dddddd;
+            }
+        }
+
+        &__submit {
+            margin-left: 1rem;
+            background: #0d468b;
+        }
+    }
+
+    &__players-list {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        justify-content: stretch;
+        margin: 1rem;
+
+        &__player-item {
+            display: flex;
+            flex-direction: row;
+            margin-bottom: 1rem;
+            background: #2c345b;
+            box-shadow: 0px 2px 1px -1px #0d468b9d, 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+            color: white;
+
+            &__avatar img {
+                width: 70px;
+                border-radius: 20px;
+            }
+
+            &__details {
+                margin-left: 1rem;
+                font-size: large;
+                flex: 1;
+
+                &__name {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                }
+            }
+        }
+    }
+}

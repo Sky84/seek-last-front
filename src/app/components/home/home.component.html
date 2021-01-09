@@ -1,0 +1,40 @@
+<div class="home">
+    <div class="home__player-steamid">
+        <mat-form-field class="home__player-steamid__formfield">
+            <mat-label class="home__player-steamid__formfield__label">Please enter your Steam ID to enter in the
+                seeker's list</mat-label>
+            <input [(ngModel)]="playerNickname" matInput class="home__player-steamid__formfield__input__nickname">
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Select an option</mat-label>
+            <mat-select [(ngModel)]="playerLanguageId">
+                <mat-option>None</mat-option>
+                <mat-option value="option1">Option 1</mat-option>
+                <mat-option value="option2">Option 2</mat-option>
+                <mat-option value="option3">Option 3</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <mat-form-field appearance="fill">
+            <mat-label>Select an option</mat-label>
+            <mat-select [(ngModel)]="playerRankId">
+                <mat-option>None</mat-option>
+                <mat-option value="option1">Option 1</mat-option>
+                <mat-option value="option2">Option 2</mat-option>
+                <mat-option value="option3">Option 3</mat-option>
+            </mat-select>
+        </mat-form-field>
+        <button mat-button class="home__player-steamid__submit" (click)="addPlayer()">Submit</button>
+    </div>
+    <!-- <div class="home__players-list">
+        <div *ngFor="let player of players" class="home__players-list__player-item">
+            <div class="home__players-list__player-item__avatar">
+                <img src="{{player.avatar}}" alt="">
+            </div>
+            <div class="home__players-list__player-item__details">
+                <div class="home__players-list__player-item__details__name">{{player.name}} <img
+                        src="{{getLanguageImage(player.languageId)}}" alt=""></div>
+                <img src="{{getRankImageUrl(player.rankId)}}" alt="">
+            </div>
+        </div>
+    </div>-->
+</div>
