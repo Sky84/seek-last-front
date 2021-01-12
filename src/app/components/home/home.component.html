@@ -2,11 +2,12 @@
     <div @playerForm class="home__player-steamid" *ngIf="!isPlayerPresent">
         <mat-form-field appearance="fill" class="home__player-steamid__formfield">
             <mat-label class="home__player-steamid__formfield__label">Player's nickname</mat-label>
-            <input [(ngModel)]="playerNickname" matInput class="home__player-steamid__formfield__input__nickname">
+            <input [(ngModel)]="playerNickname" matInput class="home__player-steamid__formfield__input__nickname"
+                required>
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Player's language</mat-label>
-            <mat-select [(ngModel)]="playerLanguageId">
+            <mat-select [(ngModel)]="playerLanguageId" required>
                 <mat-option>None</mat-option>
                 <mat-option *ngFor="let languageId of languages" value="{{languageId}}">{{languageId | uppercase}}
                 </mat-option>
@@ -14,12 +15,13 @@
         </mat-form-field>
         <mat-form-field appearance="fill">
             <mat-label>Player's rank</mat-label>
-            <mat-select [(ngModel)]="playerRankId">
+            <mat-select [(ngModel)]="playerRankId" required>
                 <mat-option>None</mat-option>
                 <mat-option *ngFor="let rank of ranks" value="{{rank.id}}">{{rank.name}}</mat-option>
             </mat-select>
         </mat-form-field>
         <button mat-button class="home__player-steamid__submit" (click)="addPlayer()">Submit</button>
+
     </div>
     <div class="home__players-list">
         <mat-grid-list @playerList cols="4" rowHeight="100px">
@@ -27,7 +29,8 @@
                 <div class="home__players-list__player-item__details">
                     <div class="home__players-list__player-item__details__name">
                         {{player.nickname}}
-                        <img class="home__players-list__player-item__details__languageimage" src="{{getLanguageImage(player.language_id)}}" alt="">
+                        <img class="home__players-list__player-item__details__languageimage"
+                            src="{{getLanguageImage(player.language_id)}}" alt="">
                     </div>
                     <img src="{{getRankImageUrl(player.rank_id)}}" alt="">
                 </div>

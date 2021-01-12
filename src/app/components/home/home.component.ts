@@ -1,11 +1,12 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Player } from '../../interfaces/player.interface';
 import { PlayersService } from '../../services/players.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { delay, repeat } from 'rxjs/operators';
-import { RankEnum } from '../../enums/Rank.enum';
 import { Rank } from '../../interfaces/rank.interface';
 import { animate, animateChild, query, stagger, style, transition, trigger } from '@angular/animations';
+import { FormControl, Validators } from '@angular/forms';
+import { RankEnum } from '../../enums/rank.enum';
 
 
 @Component({
@@ -34,12 +35,17 @@ import { animate, animateChild, query, stagger, style, transition, trigger } fro
     ])
   ]
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
+  public playerNicknameFromControl: FormControl = new FormControl('', Validators.required);
+
   public isPlayerPresent: boolean = false;
 
   public playerNickname: string = "";
   public playerLanguageId: string = "";
   public playerRankId: string = "";
+
+  private currentPlayer: any;
+
   public players: Player[] = [];
 
   public languages = ['us'];
@@ -81,6 +87,8 @@ export class HomeComponent implements OnInit {
         verticalPosition: 'top',
       });
       this.isPlayerPresent = true;
+      this.currentPlayer = player;
+      this.players.push(player);
     });
   }
 
@@ -90,5 +98,12 @@ export class HomeComponent implements OnInit {
 
   public getLanguageImage(languageId: string): string {
     return 'https://www.countryflags.io/' + languageId + '/flat/32.png';
+  }
+
+  @HostListener('window:beforeunload')
+  async ngOnDestroy() {
+    if (this.currentPlayer) {
+      await this.playersService.removePlayer(this.currentPlayer);
+    }
   }
 }
