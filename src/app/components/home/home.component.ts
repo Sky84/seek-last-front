@@ -40,9 +40,9 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   public isPlayerPresent: boolean = false;
 
-  public playerNickname: string = "";
-  public playerLanguageId: string = "";
-  public playerRankId: string = "";
+  public playerNickname: FormControl = new FormControl("");
+  public playerLanguageId: FormControl = new FormControl("");
+  public playerRankId: FormControl = new FormControl("");
 
   private currentPlayer: any;
 
@@ -64,31 +64,49 @@ export class HomeComponent implements OnInit, OnDestroy {
       return ({ id: (parseInt(rank[0]) + 1).toString(), name: rank[1] });
     });
 
-    this.playersService.getWaitingPlayers().pipe(delay(this.timeBetweenGetPlayers), repeat()).subscribe((players: Player[]) => {
-      const newPlayersWaiting = players.filter((player: Player) => { // filter player already present
+    this.playersService.getWaitingPlayers().toPromise().then((players) => { // we just init the array here but the update is startGetWaitingPlayersUpdate method
+      this.players = players;
+    });
+    this.startGetWaitingPlayersUpdate();
+  }
+
+  private startGetWaitingPlayersUpdate() {
+    this.playersService.getWaitingPlayers().pipe(delay(this.timeBetweenGetPlayers), repeat()).subscribe((playersData: Player[]) => {
+
+      const newPlayersWaiting = playersData.filter((player: Player) => { // filter player already present
         return !this.players.find(currentPlayer => currentPlayer.nickname == player.nickname);
       });
-      if (newPlayersWaiting.length > 0) {
-        this.players = this.players.concat(newPlayersWaiting);
-      }
-    })
+
+      const playersToRemove = this.players.filter((player: Player) => {
+        return !playersData.find(playerData => playerData.nickname == player.nickname);
+      })
+
+      let players = [...this.players];
+      playersToRemove.forEach((playerToRemove) => {
+        players.splice(players.indexOf(playerToRemove), 1);
+      });
+      players = players.concat(newPlayersWaiting);
+      this.players = players;
+    });
   }
 
   public addPlayer() {
     const player: Player = {
-      nickname: this.playerNickname,
-      language_id: this.playerLanguageId,
-      rank_id: this.playerRankId
+      nickname: this.playerNickname.value,
+      language_id: this.playerLanguageId.value,
+      rank_id: this.playerRankId.value
     };
+    if (player.nickname.length === 0 || player.language_id.length === 0) {
+      return;
+    }
     this.playersService.addPlayer(player).then(() => {
       this.snackBarService.open('Player successfully added! Please wait 10 sec before refresh.', undefined, {
-        duration: 2000,
+        duration: 4000,
         horizontalPosition: 'end',
         verticalPosition: 'top',
       });
       this.isPlayerPresent = true;
       this.currentPlayer = player;
-      this.players.push(player);
     });
   }
 
