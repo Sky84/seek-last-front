@@ -1,0 +1,32 @@
+.chat {
+    margin: 0 16px;
+    width: 250px;
+
+    &__window-header {
+        border-top-left-radius: 5px;
+        border-top-right-radius: 5px;
+        background: #3d477c;
+        padding: 10px;
+        color: white;
+
+        &:hover {
+            background: #515d99;
+            cursor: pointer;
+        }
+    }
+
+    &__window-content {
+        height: 250px;
+        background: white;
+        position: relative;
+
+        &__input {
+            position: absolute;
+            bottom: 0;
+            width: 90%;
+            border-top: 1px solid #515d99;
+            padding: 0 5%;
+        }
+    }
+
+}

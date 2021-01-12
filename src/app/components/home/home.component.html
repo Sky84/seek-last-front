@@ -1,5 +1,5 @@
 <div class="home">
-    <div @playerForm class="home__player-steamid" *ngIf="!isPlayerPresent">
+    <div @playerForm class="home__player-steamid" *ngIf="!currentPlayer">
         <mat-form-field appearance="fill" class="home__player-steamid__formfield">
             <mat-label class="home__player-steamid__formfield__label">Player's nickname</mat-label>
             <input [formControl]="playerNickname" matInput class="home__player-steamid__formfield__input__nickname"
@@ -25,7 +25,7 @@
     </div>
     <div class="home__players-list">
         <mat-grid-list @playerList cols="4" rowHeight="100px">
-            <mat-grid-tile @playerItem *ngFor="let player of players" class="home__players-list__player-item">
+            <mat-grid-tile @playerItem *ngFor="let player of players" class="home__players-list__player-item" matTooltip="Click to contact him">
                 <div class="home__players-list__player-item__details">
                     <div class="home__players-list__player-item__details__name">
                         {{player.nickname}}
@@ -36,5 +36,8 @@
                 </div>
             </mat-grid-tile>
         </mat-grid-list>
+    </div>
+    <div class="home__chats">
+        <app-chat></app-chat>
     </div>
 </div>

@@ -1,6 +1,12 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
-  <fa-icon class="logo" [icon]="faLogo" size="2x"></fa-icon>
-  <span>Seek Last</span>
+  <div class="logo-container">
+    <fa-icon class="logo" [icon]="faLogo" size="2x"></fa-icon>
+    <span>Seek Last</span>
+  </div>
+  <div class="online-players">
+    <fa-icon [icon]="faOnline"></fa-icon>&nbsp;
+    <span>{{playersOnline}}&nbsp;Seekers online</span>
+  </div>
 </div>
 <router-outlet></router-outlet>

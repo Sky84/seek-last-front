@@ -1,0 +1,9 @@
+<div class="chat">
+    <div class="chat__window-header" (click)="isOpened = !isOpened">{{playerNickname}}</div>
+    <div *ngIf="isOpened" class="chat__window-content">
+        <mat-form-field class="chat__window-content__input" appearance="fill" color="warn">
+            <mat-label>Type something...</mat-label>
+            <input matInput type="text">
+        </mat-form-field>
+    </div>
+</div>

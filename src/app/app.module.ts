@@ -16,12 +16,16 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
+import { MatTooltipModule } from '@angular/material/tooltip';
+import { ChatComponent } from './components/chat/chat.component';
+import { MatFormFieldModule } from '@angular/material/form-field';
 
 
 @NgModule({
   declarations: [
     AppComponent,
     HomeComponent,
+    ChatComponent,
     InMaintenanceComponent
   ],
   imports: [
@@ -32,13 +36,15 @@ import { MatGridListModule } from '@angular/material/grid-list';
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,
+    MatFormFieldModule,
     MatListModule,
     MatCardModule,
     MatInputModule,
     MatButtonModule,
     MatSelectModule,
     MatSnackBarModule,
-    MatGridListModule
+    MatGridListModule,
+    MatTooltipModule
   ],
   providers: [],
   bootstrap: [AppComponent]

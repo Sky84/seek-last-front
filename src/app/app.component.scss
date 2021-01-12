@@ -2,10 +2,21 @@
     height: 60px;
     display: flex;
     align-items: center;
+    justify-content: space-between;
     background: #3d477c;
     color: white;
     font-weight: 600;
-    .logo {
+
+    .logo-container {
+        display: flex;
+        align-items: center;
+
+        .logo {
+            margin: 0 16px;
+        }
+    }
+
+    .online-players {
         margin: 0 16px;
     }
 }

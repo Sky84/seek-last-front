@@ -38,13 +38,11 @@ import { RankEnum } from '../../enums/rank.enum';
 export class HomeComponent implements OnInit, OnDestroy {
   public playerNicknameFromControl: FormControl = new FormControl('', Validators.required);
 
-  public isPlayerPresent: boolean = false;
-
   public playerNickname: FormControl = new FormControl("");
   public playerLanguageId: FormControl = new FormControl("");
   public playerRankId: FormControl = new FormControl("");
 
-  private currentPlayer: any;
+  public currentPlayer: any;
 
   public players: Player[] = [];
 
@@ -63,7 +61,9 @@ export class HomeComponent implements OnInit, OnDestroy {
     this.ranks = ranksEntries.map((rank: any[]) => {
       return ({ id: (parseInt(rank[0]) + 1).toString(), name: rank[1] });
     });
-
+    if (localStorage.getItem('currentPlayer')) {
+      this.currentPlayer = localStorage.getItem('currentPlayer');
+    }
     this.playersService.getWaitingPlayers().toPromise().then((players) => { // we just init the array here but the update is startGetWaitingPlayersUpdate method
       this.players = players;
     });
@@ -100,13 +100,13 @@ export class HomeComponent implements OnInit, OnDestroy {
       return;
     }
     this.playersService.addPlayer(player).then(() => {
-      this.snackBarService.open('Player successfully added! Please wait 10 sec before refresh.', undefined, {
+      this.snackBarService.open('Player successfully added! Please wait 5 sec before refreshed list.', undefined, {
         duration: 4000,
-        horizontalPosition: 'end',
+        horizontalPosition: 'center',
         verticalPosition: 'top',
       });
-      this.isPlayerPresent = true;
       this.currentPlayer = player;
+      localStorage.setItem('currentPlayer', JSON.stringify(this.currentPlayer));
     });
   }
 
@@ -121,6 +121,7 @@ export class HomeComponent implements OnInit, OnDestroy {
   @HostListener('window:beforeunload')
   async ngOnDestroy() {
     if (this.currentPlayer) {
+      localStorage.clear();
       await this.playersService.removePlayer(this.currentPlayer);
     }
   }

@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { faGlobe, faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
+import { PlayersService } from './services/players.service';
 
 @Component({
   selector: 'app-root',
@@ -8,4 +9,11 @@ import { faUser, IconDefinition } from '@fortawesome/free-solid-svg-icons';
 })
 export class AppComponent {
   public faLogo: IconDefinition = faUser;
+  public faOnline: IconDefinition = faGlobe;
+
+  constructor(private playerService: PlayersService) { }
+
+  public get playersOnline() {
+    return this.playerService.PlayersCount;
+  }
 }

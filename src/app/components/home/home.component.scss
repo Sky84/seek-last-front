@@ -1,5 +1,4 @@
 .home {
-    height: 100%;
     background: #2c345b;
     display: flex;
     flex-direction: column;
@@ -30,6 +29,11 @@
             color: white;
             border-radius: 25px;
 
+            &:hover {
+                background: #37406d;
+                cursor: pointer;
+            }
+
             &__avatar img {
                 width: 70px;
                 border-radius: 20px;
@@ -45,10 +49,17 @@
                     justify-content: space-between;
                     align-items: center;
                 }
-                &__languageimage{
+
+                &__languageimage {
                     padding-right: 1rem;
                 }
             }
         }
+    }
+
+    &__chats {
+        position: absolute;
+        bottom: 0;
+        right: 0;
     }
 }
