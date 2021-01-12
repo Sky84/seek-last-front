@@ -1,0 +1,20 @@
+export enum RankEnum {
+    Silver_I,
+    Silver_II,
+    Silver_III,
+    Silver_IV,
+    Silver_Elite,
+    Silver_Elite_Master,
+    Gold_Nova_I,
+    Gold_Nova_II,
+    Gold_Nova_III,
+    Gold_Nova_Master,
+    Master_Guardian_I,
+    Master_Guardian_II,
+    Master_Guardian_Elite,
+    Distinguished_Master_Guardian,
+    Legendary_Eagle,
+    Legendary_Eagle_Master,
+    Supreme_Master_First_Class,
+    The_Global_Elite
+}

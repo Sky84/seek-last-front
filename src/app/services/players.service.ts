@@ -1,17 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Player } from '../interfaces/Player.interface';
+import { Player } from '../interfaces/player.interface';
+import { Observable } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayersService {
 
-  constructor(private httpClient: HttpClient) { }
+  constructor(private httpClient: HttpClient) {}
 
   addPlayer(player: Player): Promise<any> {
-
     return this.httpClient.post('http://localhost:3000/player', { player }).toPromise();
+  }
+
+  getWaitingPlayers(): Observable<any> {
+    return this.httpClient.get('http://localhost:3000/players');
   }
 
 }

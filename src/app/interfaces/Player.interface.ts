@@ -1,5 +1,5 @@
 export interface Player {
-    playerNickname: string;
-    playerLanguageId: string;
-    playerRankId: string;
+    nickname: string;
+    language_id: string;
+    rank_id: string;
 }

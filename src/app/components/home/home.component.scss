@@ -6,15 +6,8 @@
 
     &__player-steamid {
         margin-left: 1rem;
+        margin-top: 1rem;
         color: #dddddd;
-
-        &__formfield {
-            width: 100%;
-            &__label,
-            &__input {
-                color: #dddddd;
-            }
-        }
 
         &__submit {
             margin-left: 1rem;
@@ -26,7 +19,6 @@
         display: flex;
         flex: 1;
         flex-direction: column;
-        justify-content: stretch;
         margin: 1rem;
 
         &__player-item {
@@ -34,8 +26,9 @@
             flex-direction: row;
             margin-bottom: 1rem;
             background: #2c345b;
-            box-shadow: 0px 2px 1px -1px #0d468b9d, 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+            box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.247), 0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
             color: white;
+            border-radius: 25px;
 
             &__avatar img {
                 width: 70px;
@@ -51,6 +44,9 @@
                     display: flex;
                     justify-content: space-between;
                     align-items: center;
+                }
+                &__languageimage{
+                    padding-right: 1rem;
                 }
             }
         }
