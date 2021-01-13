@@ -7,6 +7,7 @@ import { Rank } from '../../interfaces/rank.interface';
 import { animate, animateChild, query, stagger, style, transition, trigger } from '@angular/animations';
 import { FormControl, Validators } from '@angular/forms';
 import { RankEnum } from '../../enums/rank.enum';
+import { ImagesService } from '../../services/images.service';
 
 
 @Component({
@@ -51,7 +52,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private timeBetweenGetPlayers = 5000;
 
-  constructor(private playersService: PlayersService, private snackBarService: MatSnackBar) { }
+  constructor(private playersService: PlayersService, private imagesService: ImagesService, private snackBarService: MatSnackBar) { }
 
   ngOnInit(): void {
     const language = window.navigator.language.split("-")[0];
@@ -111,11 +112,11 @@ export class HomeComponent implements OnInit, OnDestroy {
   }
 
   public getRankImageUrl(rankId: string): string {
-    return '../assets/images/ranks/skillgroup' + rankId + '.png';
+    return this.imagesService.getRankImageUrl(rankId);
   }
 
   public getLanguageImage(languageId: string): string {
-    return 'https://www.countryflags.io/' + languageId + '/flat/32.png';
+    return this.imagesService.getLanguageImage(languageId);
   }
 
   @HostListener('window:beforeunload')

@@ -1,4 +1,13 @@
 /* You can add global styles to this file, and also import other style files */
+@keyframes backgroundZoom {
+    from {
+        background-size: auto 100%;
+    }
+
+    to {
+        background-size: auto 120%;
+    }
+}
 
 html,
 body {
@@ -9,4 +18,9 @@ body {
     margin: 0;
     font-family: Roboto, "Helvetica Neue", sans-serif;
     background: #2c345b;
+    background-size: auto 100%;
+    background-image: url("./assets/images/backgroundcsgo.png");
+    background-position: center;
+    animation: 30s linear 1s infinite alternate backgroundZoom;
+    backdrop-filter: blur(10px);
 }

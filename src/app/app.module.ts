@@ -19,6 +19,7 @@ import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { ChatComponent } from './components/chat/chat.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
+import { MatTabsModule } from '@angular/material/tabs';
 
 
 @NgModule({
@@ -44,7 +45,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
     MatSelectModule,
     MatSnackBarModule,
     MatGridListModule,
-    MatTooltipModule
+    MatTooltipModule,
+    MatTabsModule
   ],
   providers: [],
   bootstrap: [AppComponent]

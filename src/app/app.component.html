@@ -1,9 +1,13 @@
 <!-- Toolbar -->
 <div class="toolbar" role="banner">
-  <div class="logo-container">
-    <fa-icon class="logo" [icon]="faLogo" size="2x"></fa-icon>
-    <span>Seek Last</span>
-  </div>
+  <nav mat-tab-nav-bar class="menus">
+    <span class="logo-container">
+      <fa-icon class="logo" [icon]="faLogo" size="2x"></fa-icon>
+      <span>Seek Last</span>
+    </span>&nbsp;
+    <a mat-tab-link *ngFor="let button of buttons" [routerLink]="button.route" (click)="onButtonClick(button)" [active]="activeButton == button">
+      {{button.label}} </a>
+  </nav>
   <div class="online-players">
     <fa-icon [icon]="faOnline"></fa-icon>&nbsp;
     <span>{{playersOnline}}&nbsp;Seekers online</span>
