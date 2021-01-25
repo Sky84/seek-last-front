@@ -1,19 +1,17 @@
+import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
 import { Player } from '../../interfaces/player.interface';
 import { PlayersService } from '../../services/players.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { delay, repeat } from 'rxjs/operators';
 import { Rank } from '../../interfaces/rank.interface';
-import { animate, animateChild, query, stagger, style, transition, trigger } from '@angular/animations';
 import { FormControl, Validators } from '@angular/forms';
 import { RankEnum } from '../../enums/rank.enum';
-import { ImagesService } from '../../services/images.service';
-
 
 @Component({
-  selector: 'app-home',
-  templateUrl: './home.component.html',
-  styleUrls: ['./home.component.scss'],
+  selector: 'app-csgo',
+  templateUrl: './csgo.component.html',
+  styleUrls: ['./csgo.component.scss'],
   animations: [
     trigger('playerForm', [
       transition(':leave', [
@@ -21,22 +19,10 @@ import { ImagesService } from '../../services/images.service';
         animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)',
           style({ transform: 'translate(0, -100%)', opacity: 0 }))  // final
       ])
-    ]),
-    trigger('playerItem', [
-      transition(':enter', [
-        style({ transform: 'scale(0.5)', opacity: 0 }),  // initial
-        animate('1s cubic-bezier(.8, -0.6, 0.2, 1.5)',
-          style({ transform: 'scale(1)', opacity: 1 }))  // final
-      ])
-    ]),
-    trigger('playerList', [
-      transition(':enter', [
-        query('@playerItem', stagger(300, animateChild()), { optional: true })
-      ]),
     ])
   ]
 })
-export class HomeComponent implements OnInit, OnDestroy {
+export class CsgoComponent implements OnInit, OnDestroy {
   public playerNicknameFromControl: FormControl = new FormControl('', Validators.required);
 
   public playerNickname: FormControl = new FormControl("");
@@ -52,7 +38,7 @@ export class HomeComponent implements OnInit, OnDestroy {
 
   private timeBetweenGetPlayers = 5000;
 
-  constructor(private playersService: PlayersService, private imagesService: ImagesService, private snackBarService: MatSnackBar) { }
+  constructor(private playersService: PlayersService, private snackBarService: MatSnackBar) { }
 
   ngOnInit(): void {
     const language = window.navigator.language.split("-")[0];
@@ -109,14 +95,6 @@ export class HomeComponent implements OnInit, OnDestroy {
       this.currentPlayer = player;
       localStorage.setItem('currentPlayer', JSON.stringify(this.currentPlayer));
     });
-  }
-
-  public getRankImageUrl(rankId: string): string {
-    return this.imagesService.getRankImageUrl(rankId);
-  }
-
-  public getLanguageImage(languageId: string): string {
-    return this.imagesService.getLanguageImage(languageId);
   }
 
   @HostListener('window:beforeunload')

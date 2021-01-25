@@ -5,7 +5,7 @@
     background: #3d477c;
     color: white;
     font-weight: 600;
-    
+
     .menus {
         .logo-container {
             display: flex;
@@ -18,8 +18,22 @@
 
         margin: 0 1rem;
     }
-    
+
     .online-players {
         margin: 0 16px;
+    }
+}
+
+.body {
+    &--csgo {
+        background-image: url("../assets/images/backgroundcsgo.png");
+    }
+
+    &--valorant {
+        background-image: url("../assets/images/backgroundvalorant.jpg");
+    }
+
+    &--leagueoflegend {
+        background-image: url("../assets/images/backgroundleagueoflegend.jpg");
     }
 }

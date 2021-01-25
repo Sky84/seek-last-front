@@ -5,7 +5,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import { HomeComponent } from './components/home/home.component';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { MatListModule } from '@angular/material/list';
 import { MatCardModule } from '@angular/material/card';
@@ -20,20 +19,27 @@ import { MatTooltipModule } from '@angular/material/tooltip';
 import { ChatComponent } from './components/chat/chat.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
+import { CsgoComponent } from './components/csgo/csgo.component';
+import { ValorantComponent } from './components/valorant/valorant.component';
+import { LeagueoflegendComponent } from './components/leagueoflegend/leagueoflegend.component';
+import { PlayerListComponent } from './components/player-list/player-list.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    HomeComponent,
     ChatComponent,
-    InMaintenanceComponent
+    InMaintenanceComponent,
+    CsgoComponent,
+    ValorantComponent,
+    LeagueoflegendComponent,
+    PlayerListComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AppRoutingModule,
-    BrowserAnimationsModule,
     FontAwesomeModule,
     FormsModule,
     ReactiveFormsModule,

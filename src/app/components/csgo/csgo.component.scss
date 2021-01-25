@@ -1,0 +1,28 @@
+.csgo {
+    display: flex;
+    flex-direction: column;
+
+    &__player-id {
+        margin-left: 1rem;
+        margin-top: 1rem;
+        color: #dddddd;
+
+        &__submit {
+            margin-left: 1rem;
+            background: #0d468b;
+        }
+    }
+
+    &__players-list {
+        display: flex;
+        flex: 1;
+        flex-direction: column;
+        margin: 1rem;
+    }
+
+    &__chats {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+    }
+}
