@@ -1,9 +1,15 @@
 <div class="chat">
-    <div class="chat__window-header" (click)="isOpened = !isOpened">{{playerNickname}}</div>
+    <div class="chat__window-header" (click)="isOpened = !isOpened">{{contactPlayerNickname}}</div>
     <div *ngIf="isOpened" class="chat__window-content">
+        <div class="chat__window-content__messages">
+            <div class="chat__window-content__messages__message" [ngClass]="{'chat__window-content__messages__message--right-message':isMessageFromMe(message)}"
+                *ngFor="let message of messages">
+                {{message.content}}
+            </div>
+        </div>
         <mat-form-field class="chat__window-content__input" appearance="fill" color="warn">
             <mat-label>Type something...</mat-label>
-            <input matInput type="text" [(ngModel)]="messageContentToSend">
+            <input matInput type="text" [(ngModel)]="messageContentToSend" required>
             <mat-icon matSuffix class="chat__window-content__input__send" (click)="onSendButtonClick()">></mat-icon>
         </mat-form-field>
     </div>

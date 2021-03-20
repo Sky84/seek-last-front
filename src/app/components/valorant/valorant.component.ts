@@ -2,7 +2,6 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { delay, repeat } from 'rxjs/operators';
 import { RankEnum } from '../../enums/rank.enum';
 import { Character } from '../../interfaces/character.interface';
 import { Player } from '../../interfaces/player.interface';
@@ -25,7 +24,7 @@ import { PlayersService } from '../../services/players.service';
 })
 export class ValorantComponent implements OnInit {
   public players: Player[] = [];
-  public playerNicknameFromControl: FormControl = new FormControl('', Validators.required);
+  public playerNicknameFormControl: FormControl = new FormControl('', Validators.required);
 
   public playerNickname: FormControl = new FormControl("");
   public playerLanguageId: FormControl = new FormControl("");
@@ -37,8 +36,6 @@ export class ValorantComponent implements OnInit {
   public languages = ['us'];
   public ranks: Rank[] = [];
   public characters: Character[] = [];
-
-  private timeBetweenGetPlayers = 5000;
 
   constructor(private playersService: PlayersService, private snackBarService: MatSnackBar) { }
 
@@ -53,30 +50,6 @@ export class ValorantComponent implements OnInit {
     if (localStorage.getItem('currentPlayer')) {
       this.currentPlayer = localStorage.getItem('currentPlayer');
     }
-    this.playersService.getWaitingPlayers().toPromise().then((players) => { // we just init the array here but the update is startGetWaitingPlayersUpdate method
-      this.players = players;
-    });
-    this.startGetWaitingPlayersUpdate();
-  }
-
-  private startGetWaitingPlayersUpdate() {
-    this.playersService.getWaitingPlayers().pipe(delay(this.timeBetweenGetPlayers), repeat()).subscribe((playersData: Player[]) => {
-
-      const newPlayersWaiting = playersData.filter((player: Player) => { // filter player already present
-        return !this.players.find(currentPlayer => currentPlayer.nickname == player.nickname);
-      });
-
-      const playersToRemove = this.players.filter((player: Player) => {
-        return !playersData.find(playerData => playerData.nickname == player.nickname);
-      })
-
-      let players = [...this.players];
-      playersToRemove.forEach((playerToRemove) => {
-        players.splice(players.indexOf(playerToRemove), 1);
-      });
-      players = players.concat(newPlayersWaiting);
-      this.players = players;
-    });
   }
 
   public addPlayer() {
@@ -88,15 +61,14 @@ export class ValorantComponent implements OnInit {
     if (player.nickname.length === 0 || player.language_id.length === 0) {
       return;
     }
-    this.playersService.addPlayer(player).then(() => {
-      this.snackBarService.open('Player successfully added! Please wait 5 sec before refreshed list.', undefined, {
-        duration: 4000,
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-      });
-      this.currentPlayer = player;
-      localStorage.setItem('currentPlayer', JSON.stringify(this.currentPlayer));
+    this.playersService.addPlayer(player);
+    this.snackBarService.open('Player successfully added! Please wait 5 sec before refreshed list.', undefined, {
+      duration: 4000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
     });
+    this.currentPlayer = player;
+    localStorage.setItem('currentPlayer', JSON.stringify(this.currentPlayer));
   }
 
 }

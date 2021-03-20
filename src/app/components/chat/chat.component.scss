@@ -20,15 +20,27 @@
         background: white;
         position: relative;
 
+        &__messages {
+            padding: 1rem;
+
+            &__message {
+                &--right-message {
+                    text-align: right;
+                }
+            }
+        }
+
         &__input {
             position: absolute;
             bottom: 0;
             width: 90%;
             border-top: 1px solid #515d99;
             padding: 0 5%;
+
             &__send {
                 padding: 1rem;
                 border-radius: 50%;
+
                 &:hover {
                     background: #515d99;
                     color: white;

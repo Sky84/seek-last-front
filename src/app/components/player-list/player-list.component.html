@@ -1,6 +1,6 @@
 <mat-grid-list @playerList cols="4" rowHeight="100px">
     <mat-grid-tile @playerItem *ngFor="let player of players" class="players-list__player-item"
-        matTooltip="Click to contact him">
+        matTooltip="Click to contact him" (click)="_onPlayerClick(player)">
         <div class="players-list__player-item__details">
             <div class="players-list__player-item__details__name">
                 {{player.nickname}}

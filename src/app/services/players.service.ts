@@ -1,35 +1,42 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Player } from '../interfaces/player.interface';
-import { Observable } from 'rxjs';
-import { map } from 'rxjs/internal/operators/map';
+import { Socket } from 'ngx-socket-io';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PlayersService {
-  private playersCount: number = 0;
+  public players: Player[] = [];
 
-  constructor(private httpClient: HttpClient) { }
-
-  addPlayer(player: Player): Promise<any> {
-    return this.httpClient.post('http://localhost:3000/player', { player }).toPromise();
+  constructor(private socket: Socket) {
+    this.socket.fromOneTimeEvent<Player[]>('get_players').then((players: Player[]) => {
+      this.players = players;
+    });
+    this.socket.fromEvent<Player>('new_player_connected').subscribe((player: Player) => {
+      this.players.push(player);
+    });
+    this.socket.fromEvent<Player>('player_disconnected').subscribe((player: Player) => {
+      const players = this.players;
+      for (let i = 0; i < players.length; i++) {
+        const _player = players[i];
+        if (_player.socketId === player.socketId) {
+          this.players.splice(this.players.indexOf(_player), 1);
+          break;
+        }
+      }
+    });
   }
 
-  getWaitingPlayers(): Observable<any> {
-    return this.httpClient.get('http://localhost:3000/players').pipe(map((players: any) => {
-      this.playersCount = players.length;
-      return players;
-    }));
+  public initPlayerListService(): void {
+    this.socket.emit('get_players_init');
   }
 
-  removePlayer(player: Player) {
-    let httpParams = new HttpParams().set('playerNickname', player.nickname);
-    return this.httpClient.delete('http://localhost:3000/player', { params: httpParams }).toPromise();
+  addPlayer(player: Player): void {
+    this.socket.emit('add_new_player', player);
   }
 
   public get PlayersCount(): number {
-    return this.playersCount;
+    return this.players.length;
   }
 
 }

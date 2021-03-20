@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Player } from '../../interfaces/player.interface';
 import { ImagesService } from '../../services/images.service';
 import { animate, animateChild, query, stagger, style, transition, trigger } from '@angular/animations';
@@ -24,10 +24,15 @@ import { animate, animateChild, query, stagger, style, transition, trigger } fro
 export class PlayerListComponent implements OnInit {
 
   @Input() players: Player[] = [];
+  @Output() onPlayerClick: EventEmitter<Player> = new EventEmitter<Player>();
 
   constructor(private imagesService: ImagesService) { }
 
   ngOnInit(): void {
+  }
+
+  public _onPlayerClick(player: Player): void {
+    this.onPlayerClick.emit({ ...player });
   }
 
   public getRankImageUrl(rankId: string): string {

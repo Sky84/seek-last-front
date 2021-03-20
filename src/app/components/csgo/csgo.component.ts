@@ -1,12 +1,12 @@
 import { animate, style, transition, trigger } from '@angular/animations';
-import { Component, HostListener, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Player } from '../../interfaces/player.interface';
 import { PlayersService } from '../../services/players.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { delay, repeat } from 'rxjs/operators';
 import { Rank } from '../../interfaces/rank.interface';
 import { FormControl, Validators } from '@angular/forms';
 import { RankEnum } from '../../enums/rank.enum';
+import { ChatService } from '../../services/chat.service';
 
 @Component({
   selector: 'app-csgo',
@@ -22,8 +22,8 @@ import { RankEnum } from '../../enums/rank.enum';
     ])
   ]
 })
-export class CsgoComponent implements OnInit, OnDestroy {
-  public playerNicknameFromControl: FormControl = new FormControl('', Validators.required);
+export class CsgoComponent implements OnInit {
+  public playerNicknameFormControl: FormControl = new FormControl('', Validators.required);
 
   public playerNickname: FormControl = new FormControl("");
   public playerLanguageId: FormControl = new FormControl("");
@@ -31,12 +31,10 @@ export class CsgoComponent implements OnInit, OnDestroy {
 
   public currentPlayer: any;
 
-  public players: Player[] = [];
-
   public languages = ['us'];
   public ranks: Rank[] = [];
 
-  private timeBetweenGetPlayers = 5000;
+  public contactPlayerNicknames: string[] = [];
 
   constructor(private playersService: PlayersService, private snackBarService: MatSnackBar) { }
 
@@ -48,33 +46,15 @@ export class CsgoComponent implements OnInit, OnDestroy {
     this.ranks = ranksEntries.map((rank: any[]) => {
       return ({ id: (parseInt(rank[0]) + 1).toString(), name: rank[1] });
     });
-    if (localStorage.getItem('currentPlayer')) {
-      this.currentPlayer = localStorage.getItem('currentPlayer');
-    }
-    this.playersService.getWaitingPlayers().toPromise().then((players) => { // we just init the array here but the update is startGetWaitingPlayersUpdate method
-      this.players = players;
-    });
-    this.startGetWaitingPlayersUpdate();
+    this.playersService.initPlayerListService();
   }
 
-  private startGetWaitingPlayersUpdate() {
-    this.playersService.getWaitingPlayers().pipe(delay(this.timeBetweenGetPlayers), repeat()).subscribe((playersData: Player[]) => {
+  public get players() {
+    return this.playersService.players;
+  }
 
-      const newPlayersWaiting = playersData.filter((player: Player) => { // filter player already present
-        return !this.players.find(currentPlayer => currentPlayer.nickname == player.nickname);
-      });
-
-      const playersToRemove = this.players.filter((player: Player) => {
-        return !playersData.find(playerData => playerData.nickname == player.nickname);
-      })
-
-      let players = [...this.players];
-      playersToRemove.forEach((playerToRemove) => {
-        players.splice(players.indexOf(playerToRemove), 1);
-      });
-      players = players.concat(newPlayersWaiting);
-      this.players = players;
-    });
+  public onPlayerClick(player: Player) {
+    this.contactPlayerNicknames.unshift(player.nickname);
   }
 
   public addPlayer() {
@@ -86,22 +66,12 @@ export class CsgoComponent implements OnInit, OnDestroy {
     if (player.nickname.length === 0 || player.language_id.length === 0) {
       return;
     }
-    this.playersService.addPlayer(player).then(() => {
-      this.snackBarService.open('Player successfully added! Please wait 5 sec before refreshed list.', undefined, {
-        duration: 4000,
-        horizontalPosition: 'center',
-        verticalPosition: 'top',
-      });
-      this.currentPlayer = player;
-      localStorage.setItem('currentPlayer', JSON.stringify(this.currentPlayer));
+    this.playersService.addPlayer(player);
+    this.snackBarService.open('Player successfully added! Please wait a few sec before refreshed list.', undefined, {
+      duration: 4000,
+      horizontalPosition: 'center',
+      verticalPosition: 'top',
     });
-  }
-
-  @HostListener('window:beforeunload')
-  async ngOnDestroy() {
-    if (this.currentPlayer) {
-      localStorage.clear();
-      await this.playersService.removePlayer(this.currentPlayer);
-    }
+    this.currentPlayer = player;
   }
 }
