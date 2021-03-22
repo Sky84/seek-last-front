@@ -27,6 +27,6 @@
         <app-player-list [players]="players" (onPlayerClick)="onPlayerClick($event)"></app-player-list>
     </div>
     <div class="csgo__chats">
-        <app-chat *ngFor="let contactPlayerNickname of contactPlayerNicknames" [contactPlayerNickname]="contactPlayerNickname"></app-chat>
+        <app-chat *ngFor="let contactPlayer of contactPlayers" [contactPlayer]="contactPlayer"></app-chat>
     </div>
 </div>

@@ -24,7 +24,36 @@
             padding: 1rem;
 
             &__message {
+                background: #515d99;
+                color: white;
+                padding: 10px;
+                border-radius: 5px;
+                position: relative;
+                margin-bottom: 5px;
+                &.bubble-left:after {
+                    position: absolute;
+                    content: "";
+                    border: 10px solid transparent;
+                    top: 50%;
+                    margin-top: -10px;
+                    border-right-color: #515d99;
+                    border-left: 0;
+                    left: -10px;
+                }
+                &.bubble-right:after {
+                    position: absolute;
+                    content: "";
+                    border: 10px solid transparent;
+                    top: 50%;
+                    margin-top: -10px;
+                    border-left-color: #eeeeee;
+                    border-right: 0;
+                    right: -10px;
+                }
+
                 &--right-message {
+                    background: #eeeeee;
+                    color: black;
                     text-align: right;
                 }
             }

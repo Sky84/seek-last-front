@@ -9,10 +9,9 @@ import { Player } from '../../interfaces/player.interface';
     styleUrls: ['./chat.component.scss']
 })
 export class ChatComponent implements OnInit {
-    public isOpened: boolean = false;
+    public isOpened: boolean = true;
 
-    @Input() contactPlayerSocketId: string = "";
-    @Input() contactPlayerNickname: string = "";
+    @Input() contactPlayer: Player = { nickname: "Unknow", language_id: "unknow", rank_id: "unknow" };
     public messageContentToSend: string = "";
     public messages: Message[] = [];
     constructor(private chatService: ChatService) { }
@@ -24,20 +23,21 @@ export class ChatComponent implements OnInit {
     }
 
     public isMessageFromMe(message: Message) {
-        return message.author === this.getAuthorByLocalStorage();
+        return message.author === this.chatService.CurrentPlayer.nickname;
     }
 
     public onSendButtonClick(): void {
         if (this.messageContentToSend == "" || this.messageContentToSend == null || this.messageContentToSend == undefined) {
             return;
         }
-        const message: Message = { author: this.getAuthorByLocalStorage(), content: this.messageContentToSend.toString(), destinator: this.contactPlayerSocketId };
+        const message: Message = { author: this.chatService.CurrentPlayer.nickname, content: this.messageContentToSend.toString() };
         this.messageContentToSend = "";
-        this.chatService.sendMessage(this.contactPlayerSocketId,message);
+        this.chatService.sendMessage(this.contactPlayer.socketId!, message);
     }
 
-    private getAuthorByLocalStorage() {
-        const currentPlayer = JSON.parse(localStorage.getItem('currentPlayer') || '{"nickname":"unkown"}');
-        return currentPlayer.nickname;
+    public handleInputKeyUp($event: KeyboardEvent) {
+        if ($event.key === "Enter") {
+            this.onSendButtonClick();
+        }
     }
 }

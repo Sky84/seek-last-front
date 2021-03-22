@@ -1,0 +1,11 @@
+<h1 mat-dialog-title>Please, you need to enter a nickname before chat with your last !</h1>
+<div mat-dialog-content>
+  <p>Nickname</p>
+  <mat-form-field>
+    <input matInput [(ngModel)]="nickname">
+  </mat-form-field>
+</div>
+<div mat-dialog-actions>
+  <button mat-button (click)="onNoClick()">No Thanks</button>
+  <button mat-button [mat-dialog-close]="nickname" cdkFocusInitial>Ok</button>
+</div>

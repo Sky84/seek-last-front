@@ -5,9 +5,9 @@
             <div class="players-list__player-item__details__name">
                 {{player.nickname}}
                 <img class="players-list__player-item__details__languageimage"
-                    src="{{getLanguageImage(player.language_id)}}" alt="">
+                    src="{{getLanguageImage(player.language_id!)}}" alt="">
             </div>
-            <img *ngIf="!!player.rank_id" src="{{getRankImageUrl(player.rank_id)}}" alt="">
+            <img *ngIf="!!player.rank_id" src="{{getRankImageUrl(player.rank_id!)}}" alt="">
         </div>
     </mat-grid-tile>
 </mat-grid-list>

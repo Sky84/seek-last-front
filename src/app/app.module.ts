@@ -17,6 +17,7 @@ import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatGridListModule } from '@angular/material/grid-list';
 import { MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialogModule } from '@angular/material/dialog';
 import { ChatComponent } from './components/chat/chat.component';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
@@ -24,40 +25,43 @@ import { CsgoComponent } from './components/csgo/csgo.component';
 import { ValorantComponent } from './components/valorant/valorant.component';
 import { LeagueoflegendComponent } from './components/leagueoflegend/leagueoflegend.component';
 import { PlayerListComponent } from './components/player-list/player-list.component';
+import { DialogLoginComponent } from './components/dialog-login/dialog-login.component';
 
 const socketConfig: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    ChatComponent,
-    InMaintenanceComponent,
-    CsgoComponent,
-    ValorantComponent,
-    LeagueoflegendComponent,
-    PlayerListComponent
-  ],
-  imports: [
-    BrowserModule,
-    BrowserAnimationsModule,
-    HttpClientModule,
-    AppRoutingModule,
-    FontAwesomeModule,
-    FormsModule, 
-    SocketIoModule.forRoot(socketConfig),
-    ReactiveFormsModule,
-    MatFormFieldModule,
-    MatListModule,
-    MatCardModule,
-    MatInputModule,
-    MatButtonModule,
-    MatSelectModule,
-    MatSnackBarModule,
-    MatGridListModule,
-    MatTooltipModule,
-    MatTabsModule
-  ],
-  providers: [],
-  bootstrap: [AppComponent]
+    declarations: [
+        AppComponent,
+        ChatComponent,
+        InMaintenanceComponent,
+        CsgoComponent,
+        ValorantComponent,
+        LeagueoflegendComponent,
+        PlayerListComponent,
+        DialogLoginComponent
+    ],
+    imports: [
+        BrowserModule,
+        BrowserAnimationsModule,
+        HttpClientModule,
+        AppRoutingModule,
+        FontAwesomeModule,
+        FormsModule,
+        SocketIoModule.forRoot(socketConfig),
+        ReactiveFormsModule,
+        MatFormFieldModule,
+        MatListModule,
+        MatCardModule,
+        MatInputModule,
+        MatButtonModule,
+        MatSelectModule,
+        MatSnackBarModule,
+        MatGridListModule,
+        MatTooltipModule,
+        MatTabsModule,
+        MatDialogModule
+    ],
+    providers: [],
+    bootstrap: [AppComponent]
 })
 export class AppModule { }
