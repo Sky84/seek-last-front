@@ -8,8 +8,8 @@ export class ImagesService {
 
     constructor() { }
 
-    public getRankImageUrl(rankId: string): string {
-        return '../assets/images/ranks/skillgroup' + rankId + '.png';
+    public getRankImageUrl(rankType: string, rankId: string): string {
+        return '../assets/images/ranks/' + rankType + '/skillgroup' + rankId + '.png';
     }
 
     public getLanguageImage(languageId: string): string {

@@ -24,7 +24,7 @@
 
     </div>
     <div class="csgo__players-list">
-        <app-player-list [players]="players" (onPlayerClick)="onPlayerClick($event)"></app-player-list>
+        <app-player-list [game]="'csgo'" [players]="players" (onPlayerClick)="onPlayerClick($event)"></app-player-list>
     </div>
     <div class="csgo__chats">
         <app-chat *ngFor="let contactPlayer of contactPlayers" [contactPlayer]="contactPlayer"></app-chat>

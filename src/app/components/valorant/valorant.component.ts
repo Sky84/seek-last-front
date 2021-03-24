@@ -2,7 +2,9 @@ import { animate, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, Validators } from '@angular/forms';
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { RankEnum } from '../../enums/rank.enum';
+import { ValorantRankEnum } from 'src/app/enums/valorantrank.enum';
+import { PayloadFromEvent } from 'src/app/interfaces/payload.interface';
+import { ChatService } from 'src/app/services/chat.service';
 import { Character } from '../../interfaces/character.interface';
 import { Player } from '../../interfaces/player.interface';
 import { Rank } from '../../interfaces/rank.interface';
@@ -23,13 +25,12 @@ import { PlayersService } from '../../services/players.service';
     ]
 })
 export class ValorantComponent implements OnInit {
-    public players: Player[] = [];
     public playerNicknameFormControl: FormControl = new FormControl('', Validators.required);
 
     public playerNickname: FormControl = new FormControl("");
     public playerLanguageId: FormControl = new FormControl("");
     public playerRankId: FormControl = new FormControl("");
-    public playerCharactersIds: FormControl = new FormControl("");
+    public playerCharacterId: FormControl = new FormControl("");
 
     public currentPlayer: any;
 
@@ -37,18 +38,40 @@ export class ValorantComponent implements OnInit {
     public ranks: Rank[] = [];
     public characters: Character[] = [];
 
-    constructor(private playersService: PlayersService, private snackBarService: MatSnackBar) { }
+    public contactPlayers: Player[] = [];
+
+    constructor(private playersService: PlayersService, private chatService: ChatService, private snackBarService: MatSnackBar) { }
 
     ngOnInit(): void {
         const language = window.navigator.language.split("-")[0];
         this.languages.push(language);
 
-        const ranksEntries = Object.entries(RankEnum).filter(e => !isNaN(parseInt(e[0])));
+        const ranksEntries = Object.entries(ValorantRankEnum).filter(e => !isNaN(parseInt(e[0])));
         this.ranks = ranksEntries.map((rank: any[]) => {
             return ({ id: (parseInt(rank[0]) + 1).toString(), name: rank[1] });
         });
-        if (localStorage.getItem('currentPlayer')) {
-            this.currentPlayer = localStorage.getItem('currentPlayer');
+        this.playersService.initPlayerListService();
+        this.chatService.handleMessages().subscribe(({ message, from }: PayloadFromEvent) => {
+            const contactPlayer = { socketId: from, nickname: message.author };
+            if (!this.contactPlayers.find(() => contactPlayer.socketId)) {
+                this.contactPlayers.push(contactPlayer);
+            }
+        });
+    }
+
+    public get players() {
+        return this.playersService.players;
+    }
+
+    public onPlayerClick(player: Player) {
+        if (this.currentPlayer && player.nickname === this.currentPlayer.nickname) {
+            this.snackBarService.open('You cannot contact yourself.', undefined, {
+                duration: 4000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+            });
+        } else {
+            this.contactPlayers.unshift(player);
         }
     }
 
@@ -56,18 +79,20 @@ export class ValorantComponent implements OnInit {
         const player: Player = {
             nickname: this.playerNickname.value,
             language_id: this.playerLanguageId.value,
-            rank_id: this.playerRankId.value
+            rank_id: this.playerRankId.value,
+            character_id: this.playerCharacterId.value
         };
-        if (player.nickname && player.nickname.length === 0 || player.language_id && player.language_id.length === 0) {
+        if (player.nickname!.length === 0 || player.language_id!.length === 0) {
             return;
         }
         this.playersService.addPlayer(player);
-        this.snackBarService.open('Player successfully added! Please wait 5 sec before refreshed list.', undefined, {
+        this.snackBarService.open('Player successfully added! Please wait a few sec before refreshed list.', undefined, {
             duration: 4000,
             horizontalPosition: 'center',
             verticalPosition: 'top',
         });
         this.currentPlayer = player;
+        this.chatService.saveCurrentPlayer(player);
     }
 
 }

@@ -50,7 +50,6 @@ export class ChatService {
     }
 
     public saveCurrentPlayer(player: Player) {
-        console.log(player)
         localStorage.setItem('currentPlayer', JSON.stringify(player));
     }
 }

@@ -1,4 +1,4 @@
-export enum RankEnum {
+export enum CSGORankEnum {
     Silver_I,
     Silver_II,
     Silver_III,

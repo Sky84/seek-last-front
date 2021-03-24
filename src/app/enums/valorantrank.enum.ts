@@ -1,0 +1,22 @@
+export enum ValorantRankEnum {
+    Iron_I,
+    Iron_II,
+    Iron_III,
+    Bronze_I,
+    Bronze_II,
+    Bronze_III,
+    Silver_I,
+    Silver_II,
+    Silver_III,
+    Gold_I,
+    Gold_II,
+    Gold_III,
+    Platinum_I,
+    Platinum_II,
+    Platinum_III,
+    Diamond_I,
+    Diamond_II,
+    Diamond_III,
+    Immortal,
+    Radiant
+}

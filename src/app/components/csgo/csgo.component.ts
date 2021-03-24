@@ -4,7 +4,7 @@ import { PlayersService } from '../../services/players.service';
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { Rank } from '../../interfaces/rank.interface';
 import { FormControl, Validators } from '@angular/forms';
-import { RankEnum } from '../../enums/rank.enum';
+import { CSGORankEnum } from '../../enums/csgorank.enum';
 import { ChatService } from '../../services/chat.service';
 import { PayloadFromEvent } from 'src/app/interfaces/payload.interface';
 import { Player } from 'src/app/interfaces/player.interface';
@@ -43,7 +43,7 @@ export class CsgoComponent implements OnInit {
         const language = window.navigator.language.split("-")[0];
         this.languages.push(language);
 
-        const ranksEntries = Object.entries(RankEnum).filter(e => !isNaN(parseInt(e[0])));
+        const ranksEntries = Object.entries(CSGORankEnum).filter(e => !isNaN(parseInt(e[0])));
         this.ranks = ranksEntries.map((rank: any[]) => {
             return ({ id: (parseInt(rank[0]) + 1).toString(), name: rank[1] });
         });
