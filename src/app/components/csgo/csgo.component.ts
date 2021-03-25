@@ -67,6 +67,13 @@ export class CsgoComponent implements OnInit {
                 horizontalPosition: 'center',
                 verticalPosition: 'top',
             });
+        }
+        else if (!!this.contactPlayers.find((p) => p.socketId === player.socketId)) {
+            this.snackBarService.open('Chat for this player is already open.', undefined, {
+                duration: 4000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+            });
         } else {
             this.contactPlayers.unshift(player);
         }

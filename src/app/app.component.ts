@@ -23,7 +23,7 @@ export class AppComponent implements OnInit {
   public buttons: Button[] = [
     { label: 'CS:GO', route: '/csgo', bodyClass: 'body--csgo' },
     { label: 'VALORANT', route: '/valorant', bodyClass: 'body--valorant' },
-    { label: 'LEAGUE OF LEGEND', route: '/leagueoflegend', bodyClass: 'body--leagueoflegend' }
+    { label: 'LEAGUE OF LEGENDS', route: '/leagueoflegends', bodyClass: 'body--leagueoflegends' }
   ];
 
   public activeButton: Button = this.buttons[0];

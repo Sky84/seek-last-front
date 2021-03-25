@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { AfterViewInit, Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { Message } from 'src/app/interfaces/message.interface';
 import { ChatService } from 'src/app/services/chat.service';
 import { Player } from '../../interfaces/player.interface';
@@ -11,6 +11,7 @@ import { Player } from '../../interfaces/player.interface';
 export class ChatComponent implements OnInit {
     public isOpened: boolean = true;
 
+    @ViewChild('messagesContainer') private messagesContainer!: ElementRef<HTMLDivElement>;
     @Input() contactPlayer: Player = { nickname: "Unknow", language_id: "unknow", rank_id: "unknow" };
     public messageContentToSend: string = "";
     public messages: Message[] = [];
@@ -19,6 +20,16 @@ export class ChatComponent implements OnInit {
     ngOnInit() {
         this.chatService.messagesSubject.subscribe((messages) => {
             this.messages = messages;
+            this.scrollToLastMessageElements();
+        });
+    }
+
+    public scrollToLastMessageElements(): void {
+        setTimeout(() => {
+            const messageElems = document.querySelectorAll('.chat__window-content__messages__message');
+            if (messageElems.length > 0) {
+                messageElems[messageElems.length - 1].scrollIntoView({ behavior: 'smooth' });
+            }
         });
     }
 
@@ -33,6 +44,7 @@ export class ChatComponent implements OnInit {
         const message: Message = { author: this.chatService.CurrentPlayer.nickname, content: this.messageContentToSend.toString() };
         this.messageContentToSend = "";
         this.chatService.sendMessage(this.contactPlayer.socketId!, message);
+        this.scrollToLastMessageElements();
     }
 
     public handleInputKeyUp($event: KeyboardEvent) {

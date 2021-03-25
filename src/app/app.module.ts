@@ -23,7 +23,7 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatTabsModule } from '@angular/material/tabs';
 import { CsgoComponent } from './components/csgo/csgo.component';
 import { ValorantComponent } from './components/valorant/valorant.component';
-import { LeagueoflegendComponent } from './components/leagueoflegend/leagueoflegend.component';
+import { LeagueoflegendsComponent } from './components/leagueoflegends/leagueoflegends.component';
 import { PlayerListComponent } from './components/player-list/player-list.component';
 import { DialogLoginComponent } from './components/dialog-login/dialog-login.component';
 
@@ -36,7 +36,7 @@ const socketConfig: SocketIoConfig = { url: 'http://localhost:3000', options: {}
         InMaintenanceComponent,
         CsgoComponent,
         ValorantComponent,
-        LeagueoflegendComponent,
+        LeagueoflegendsComponent,
         PlayerListComponent,
         DialogLoginComponent
     ],
