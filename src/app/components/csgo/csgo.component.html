@@ -1,5 +1,5 @@
 <div class="csgo">
-    <div @playerForm class="csgo__player-id" *ngIf="!currentPlayer">
+    <div @playerForm class="csgo__player-id" *ngIf="!CurrentPlayer.nickname">
         <mat-form-field appearance="fill" class="csgo__player-id__formfield">
             <mat-label class="csgo__player-id__formfield__label">Player's nickname</mat-label>
             <input [formControl]="playerNickname" matInput class="csgo__player-id__formfield__input__nickname"
