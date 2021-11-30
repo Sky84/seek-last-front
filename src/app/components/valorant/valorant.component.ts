@@ -6,7 +6,7 @@ import { ValorantRankEnum } from 'src/app/enums/valorantrank.enum';
 import { PayloadFromEvent } from 'src/app/interfaces/payload.interface';
 import { ChatService } from 'src/app/services/chat.service';
 import { Character } from '../../interfaces/character.interface';
-import { Player } from '../../interfaces/player.interface';
+import { GameType, Player } from '../../interfaces/player.interface';
 import { Rank } from '../../interfaces/rank.interface';
 import { PlayersService } from '../../services/players.service';
 
@@ -50,9 +50,9 @@ export class ValorantComponent implements OnInit {
         this.ranks = ranksEntries.map((rank: any[]) => {
             return ({ id: (parseInt(rank[0]) + 1).toString(), name: rank[1] });
         });
-        this.playersService.initPlayerListService();
+        this.playersService.initPlayerListService(GameType.VALORANT);
         this.chatService.handleMessages().subscribe(({ message, from }: PayloadFromEvent) => {
-            const contactPlayer = { socketId: from, nickname: message.author };
+            const contactPlayer: Player = { socketId: from, nickname: message.author, gameType: this.playersService.gameType };
             if (!this.contactPlayers.find(() => contactPlayer.socketId)) {
                 this.contactPlayers.push(contactPlayer);
             }
@@ -60,7 +60,7 @@ export class ValorantComponent implements OnInit {
     }
 
     public get players() {
-        return this.playersService.players;
+        return this.playersService.players[this.playersService.gameType];
     }
 
     public onPlayerClick(player: Player) {
@@ -80,19 +80,10 @@ export class ValorantComponent implements OnInit {
             nickname: this.playerNickname.value,
             language_id: this.playerLanguageId.value,
             rank_id: this.playerRankId.value,
-            character_id: this.playerCharacterId.value
+            character_id: this.playerCharacterId.value,
+            gameType: this.playersService.gameType
         };
-        if (player.nickname!.length === 0 || player.language_id!.length === 0) {
-            return;
-        }
         this.playersService.addPlayer(player);
-        this.snackBarService.open('Player successfully added! Please wait a few sec before refreshed list.', undefined, {
-            duration: 4000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
-        });
-        this.currentPlayer = player;
-        this.chatService.saveCurrentPlayer(player);
     }
 
 }

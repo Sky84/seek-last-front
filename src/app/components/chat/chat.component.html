@@ -9,7 +9,7 @@
         </div>
         <mat-form-field class="chat__window-content__input" appearance="fill" color="warn">
             <mat-label>Type something...</mat-label>
-            <input matInput type="text" [(ngModel)]="messageContentToSend" (keyup)="handleInputKeyUp($event)" required>
+            <input matInput type="text" [(ngModel)]="messageContentToSend" (keyup)="handleInputKeyUp($event)" autocomplete="off" required>
             <mat-icon matSuffix class="chat__window-content__input__send" (click)="onSendButtonClick()">></mat-icon>
         </mat-form-field>
     </div>

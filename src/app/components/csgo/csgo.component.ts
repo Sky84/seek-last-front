@@ -7,7 +7,8 @@ import { FormControl, Validators } from '@angular/forms';
 import { CSGORankEnum } from '../../enums/csgorank.enum';
 import { ChatService } from '../../services/chat.service';
 import { PayloadFromEvent } from 'src/app/interfaces/payload.interface';
-import { Player } from 'src/app/interfaces/player.interface';
+import { GameType, Player } from 'src/app/interfaces/player.interface';
+import { CurrentPlayerService } from 'src/app/services/current-player.service';
 
 @Component({
     selector: 'app-csgo',
@@ -30,14 +31,12 @@ export class CsgoComponent implements OnInit {
     public playerLanguageId: FormControl = new FormControl("");
     public playerRankId: FormControl = new FormControl("");
 
-    public currentPlayer: any;
-
     public languages = ['us'];
     public ranks: Rank[] = [];
 
     public contactPlayers: Player[] = [];
 
-    constructor(private playersService: PlayersService, private chatService: ChatService, private snackBarService: MatSnackBar) { }
+    constructor(private playersService: PlayersService, private chatService: ChatService, private snackBarService: MatSnackBar, private currentPlayerService: CurrentPlayerService) { }
 
     ngOnInit(): void {
         const language = window.navigator.language.split("-")[0];
@@ -47,9 +46,9 @@ export class CsgoComponent implements OnInit {
         this.ranks = ranksEntries.map((rank: any[]) => {
             return ({ id: (parseInt(rank[0]) + 1).toString(), name: rank[1] });
         });
-        this.playersService.initPlayerListService();
+        this.playersService.initPlayerListService(GameType.CSGO);
         this.chatService.handleMessages().subscribe(({ message, from }: PayloadFromEvent) => {
-            const contactPlayer = { socketId: from, nickname: message.author };
+            const contactPlayer: Player = { socketId: from, nickname: message.author, gameType: this.playersService.gameType };
             if (!this.contactPlayers.find(() => contactPlayer.socketId)) {
                 this.contactPlayers.push(contactPlayer);
             }
@@ -57,12 +56,19 @@ export class CsgoComponent implements OnInit {
     }
 
     public get players() {
-        return this.playersService.players;
+        return this.playersService.players[this.playersService.gameType];
     }
 
     public onPlayerClick(player: Player) {
-        if (this.currentPlayer && player.nickname === this.currentPlayer.nickname) {
+        if (this.CurrentPlayer && player.nickname === this.CurrentPlayer.nickname) {
             this.snackBarService.open('You cannot contact yourself.', undefined, {
+                duration: 4000,
+                horizontalPosition: 'center',
+                verticalPosition: 'top',
+            });
+        }
+        else if (!!this.contactPlayers.find((p) => p.socketId === player.socketId)) {
+            this.snackBarService.open('Chat for this player is already open.', undefined, {
                 duration: 4000,
                 horizontalPosition: 'center',
                 verticalPosition: 'top',
@@ -76,18 +82,13 @@ export class CsgoComponent implements OnInit {
         const player: Player = {
             nickname: this.playerNickname.value,
             language_id: this.playerLanguageId.value,
-            rank_id: this.playerRankId.value
+            rank_id: this.playerRankId.value,
+            gameType: this.playersService.gameType
         };
-        if (player.nickname!.length === 0 || player.language_id!.length === 0) {
-            return;
-        }
         this.playersService.addPlayer(player);
-        this.snackBarService.open('Player successfully added! Please wait a few sec before refreshed list.', undefined, {
-            duration: 4000,
-            horizontalPosition: 'center',
-            verticalPosition: 'top',
-        });
-        this.currentPlayer = player;
-        this.chatService.saveCurrentPlayer(player);
+    }
+
+    public get CurrentPlayer() {
+        return this.currentPlayerService.getCurrentPlayer(this.playersService.gameType);
     }
 }
