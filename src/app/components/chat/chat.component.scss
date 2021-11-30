@@ -1,81 +1,82 @@
 .chat {
-    margin: 0 16px;
-    width: 250px;
+  margin: 0 16px;
+  width: 250px;
 
-    &__window-header {
-        border-top-left-radius: 5px;
-        border-top-right-radius: 5px;
-        background: #3d477c;
-        padding: 10px;
+  &__window-header {
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    background: #3d477c;
+    padding: 10px;
+    color: white;
+
+    &:hover {
+      background: #515d99;
+      cursor: pointer;
+    }
+  }
+
+  &__window-content {
+    height: 250px;
+    background: white;
+    position: relative;
+
+    &__messages {
+      padding: 1rem;
+      overflow: auto;
+      height: 59%;
+      &__message {
+        background: #515d99;
         color: white;
+        padding: 10px;
+        border-radius: 5px;
+        position: relative;
+        margin-bottom: 5px;
+        &.bubble-left:after {
+          position: absolute;
+          content: "";
+          border: 10px solid transparent;
+          top: 50%;
+          margin-top: -10px;
+          border-right-color: #515d99;
+          border-left: 0;
+          left: -10px;
+        }
+        &.bubble-right:after {
+          position: absolute;
+          content: "";
+          border: 10px solid transparent;
+          top: 50%;
+          margin-top: -10px;
+          border-left-color: #eeeeee;
+          border-right: 0;
+          right: -10px;
+        }
+
+        &--right-message {
+          background: #eeeeee;
+          color: black;
+          text-align: right;
+        }
+      }
+    }
+
+    &__input {
+      position: absolute;
+      bottom: 0;
+      width: 90%;
+      border-top: 1px solid #515d99;
+      padding: 0 5%;
+
+      &__send {
+        padding: 1rem;
+        border-radius: 50%;
 
         &:hover {
-            background: #515d99;
-            cursor: pointer;
+          background: #515d99;
+          color: white;
+          cursor: pointer;
         }
+      }
     }
-
-    &__window-content {
-        height: 250px;
-        background: white;
-        position: relative;
-
-        &__messages {
-            padding: 1rem;
-
-            &__message {
-                background: #515d99;
-                color: white;
-                padding: 10px;
-                border-radius: 5px;
-                position: relative;
-                margin-bottom: 5px;
-                &.bubble-left:after {
-                    position: absolute;
-                    content: "";
-                    border: 10px solid transparent;
-                    top: 50%;
-                    margin-top: -10px;
-                    border-right-color: #515d99;
-                    border-left: 0;
-                    left: -10px;
-                }
-                &.bubble-right:after {
-                    position: absolute;
-                    content: "";
-                    border: 10px solid transparent;
-                    top: 50%;
-                    margin-top: -10px;
-                    border-left-color: #eeeeee;
-                    border-right: 0;
-                    right: -10px;
-                }
-
-                &--right-message {
-                    background: #eeeeee;
-                    color: black;
-                    text-align: right;
-                }
-            }
-        }
-
-        &__input {
-            position: absolute;
-            bottom: 0;
-            width: 90%;
-            border-top: 1px solid #515d99;
-            padding: 0 5%;
-
-            &__send {
-                padding: 1rem;
-                border-radius: 50%;
-
-                &:hover {
-                    background: #515d99;
-                    color: white;
-                    cursor: pointer;
-                }
-            }
-        }
-    }
+  }
 }

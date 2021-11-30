@@ -6,8 +6,8 @@ import { ValorantComponent } from './components/valorant/valorant.component';
 
 const routes: Routes = [
   { path: 'csgo', component: CsgoComponent, pathMatch: 'full' },
-  { path: 'valorant', component: ValorantComponent, pathMatch: 'full' },
-  { path: 'leagueoflegend', component: LeagueoflegendComponent, pathMatch: 'full' },
+  //{ path: 'valorant', component: ValorantComponent, pathMatch: 'full' },
+  //{ path: 'leagueoflegend', component: LeagueoflegendComponent, pathMatch: 'full' },
   { path: '', redirectTo: 'csgo', pathMatch:'full' },
 ];
 

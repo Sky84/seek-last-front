@@ -9,6 +9,7 @@ interface Button {
   label: string;
   route: string;
   bodyClass: string;
+  disabled: boolean;
 }
 @Component({
   selector: 'app-root',
@@ -21,9 +22,9 @@ export class AppComponent implements OnInit {
   public faOnline: IconDefinition = faGlobe;
 
   public buttons: Button[] = [
-    { label: 'CS:GO', route: '/csgo', bodyClass: 'body--csgo' },
-    { label: 'VALORANT', route: '/valorant', bodyClass: 'body--valorant' },
-    { label: 'LEAGUE OF LEGEND', route: '/leagueoflegend', bodyClass: 'body--leagueoflegend' }
+    { label: 'CS:GO', route: '/csgo', bodyClass: 'body--csgo', disabled: false },
+    { label: 'VALORANT (SOON)', route: '/valorant', bodyClass: 'body--valorant', disabled: true },
+    { label: 'LEAGUE OF LEGEND (SOON)', route: '/leagueoflegend', bodyClass: 'body--leagueoflegend', disabled: true }
   ];
 
   public activeButton: Button = this.buttons[0];

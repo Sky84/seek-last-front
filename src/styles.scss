@@ -22,4 +22,6 @@ body {
     background-position: center;
     animation: 30s linear 1s infinite alternate backgroundZoom;
     backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    -moz-backdrop-filter: blur(10px);
 }

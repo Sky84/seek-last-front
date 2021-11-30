@@ -1,7 +1,7 @@
 <div class="chat">
     <div class="chat__window-header" (click)="isOpened = !isOpened">{{contactPlayer.nickname}}</div>
     <div *ngIf="isOpened" class="chat__window-content">
-        <div class="chat__window-content__messages">
+        <div class="chat__window-content__messages" #chatWindowMessages>
             <div class="chat__window-content__messages__message" [ngClass]="{'chat__window-content__messages__message--right-message bubble-right':isMessageFromMe(message), 'bubble-left':!isMessageFromMe(message)}"
                 *ngFor="let message of messages">
                 {{message.content}}

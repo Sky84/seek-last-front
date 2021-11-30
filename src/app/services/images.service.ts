@@ -13,6 +13,6 @@ export class ImagesService {
     }
 
     public getLanguageImage(languageId: string): string {
-        return 'https://www.countryflags.io/' + languageId + '/flat/32.png';
+        return 'https://flagcdn.com/w40/' + languageId + '.png';
     }
 }
