@@ -26,8 +26,9 @@ import { ValorantComponent } from './components/valorant/valorant.component';
 import { LeagueoflegendsComponent } from './components/leagueoflegends/leagueoflegends.component';
 import { PlayerListComponent } from './components/player-list/player-list.component';
 import { DialogLoginComponent } from './components/dialog-login/dialog-login.component';
+import { environment } from '../environments/environment';
 
-const socketConfig: SocketIoConfig = { url: 'http://localhost:3000', options: {} };
+const socketConfig: SocketIoConfig = { url: 'http://' + environment.baseServerUrl, options: {} };
 
 @NgModule({
     declarations: [
